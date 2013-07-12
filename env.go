@@ -15,5 +15,10 @@ func handler(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 	http.HandleFunc("/", handler)
+	go func() {
+		for {
+			log.Println("Hello from within an infinite loop!")
+		}
+	}()
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
 }
