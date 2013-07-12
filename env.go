@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 )
 
 func handler(w http.ResponseWriter, req *http.Request) {
@@ -18,6 +19,8 @@ func main() {
 	go func() {
 		for {
 			log.Println("Hello from within an infinite loop!")
+			// Don't reach the disk quota too soon.
+			time.Sleep(time.Millisecond)
 		}
 	}()
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
